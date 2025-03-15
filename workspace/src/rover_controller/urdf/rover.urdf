@@ -1,0 +1,150 @@
+<?xml version="1.0"?>
+<robot name="rover" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <!-- Ana Gövde -->
+  <link name="base_link">
+    <visual>
+      <geometry>
+        <box size="0.6 0.4 0.15"/>
+      </geometry>
+      <material name="blue"/>
+    </visual>
+    <inertial>
+      <mass value="60.0"/>
+      <inertia ixx="5.0" ixy="0.0" ixz="0.0" iyy="5.0" iyz="0.0" izz="5.0"/>
+    </inertial>
+    <collision>
+      <geometry>
+        <box size="0.6 0.4 0.15"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <!-- Ön Sol Tekerlek -->
+  <joint name="front_left_wheel_joint" type="continuous">
+    <parent link="base_link"/>
+    <child link="front_left_wheel"/>
+    <origin xyz="0.3 0.2 -0.05" rpy="1.57 0 0"/>
+    <axis xyz="0 0 0"/>
+  </joint>
+
+  <link name="front_left_wheel">
+    <inertial>
+      <mass value="2.0"/>
+      <inertia ixx="0.01" ixy="0.0" ixz="0.0" iyy="0.01" iyz="0.0" izz="0.01"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <cylinder length="0.05" radius="0.07"/>
+      </geometry>
+      <material name="black"/>
+    </visual>
+    <collision>
+      <geometry>
+        <cylinder length="0.05" radius="0.07"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <!-- Ön Sağ Tekerlek -->
+  <joint name="front_right_wheel_joint" type="continuous">
+    <parent link="base_link"/>
+    <child link="front_right_wheel"/>
+    <origin xyz="0.3 -0.2 -0.05" rpy="1.57 0 0"/>
+    <axis xyz="0 0 0"/>
+  </joint>
+
+  <link name="front_right_wheel">
+    <inertial>
+      <mass value="2.0"/>
+      <inertia ixx="0.01" ixy="0.0" ixz="0.0" iyy="0.01" iyz="0.0" izz="0.01"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <cylinder length="0.05" radius="0.07"/>
+      </geometry>
+      <material name="black"/>
+    </visual>
+    <collision>
+      <geometry>
+        <cylinder length="0.05" radius="0.07"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <!-- Arka Sol Tekerlek -->
+  <joint name="rear_left_wheel_joint" type="continuous">
+    <parent link="base_link"/>
+    <child link="rear_left_wheel"/>
+    <origin xyz="-0.3 0.2 -0.05" rpy="1.57 0 0"/>
+    <axis xyz="0 0 0"/>
+  </joint>
+
+  <link name="rear_left_wheel">
+    <inertial>
+      <mass value="2.0"/>
+      <inertia ixx="0.01" ixy="0.0" ixz="0.0" iyy="0.01" iyz="0.0" izz="0.01"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <cylinder length="0.05" radius="0.07"/>
+      </geometry>
+      <material name="black"/>
+    </visual>
+    <collision>
+      <geometry>
+        <cylinder length="0.05" radius="0.07"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <!-- Arka Sağ Tekerlek -->
+  <joint name="rear_right_wheel_joint" type="continuous">
+    <parent link="base_link"/>
+    <child link="rear_right_wheel"/>
+    <origin xyz="-0.3 -0.2 -0.05" rpy="1.57 0 0"/>
+    <axis xyz="0 0 0"/>
+  </joint>
+
+  <link name="rear_right_wheel">
+    <inertial>
+      <mass value="2.0"/>
+      <inertia ixx="0.01" ixy="0.0" ixz="0.0" iyy="0.01" iyz="0.0" izz="0.01"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <cylinder length="0.05" radius="0.07"/>
+      </geometry>
+      <material name="black"/>
+    </visual>
+    <collision>
+      <geometry>
+        <cylinder length="0.05" radius="0.07"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <!-- Gazebo için Motor Tanımlamaları -->
+  <gazebo>
+    <plugin name="diff_drive_controller" filename="libgazebo_ros_diff_drive.so">
+    <ros>
+        <namespace>/rover</namespace>
+        <remapping>cmd_vel:=/cmd_vel</remapping>
+        <remapping>odom:=/odom</remapping>
+    </ros>
+    
+    <update_rate>100.0</update_rate>
+    
+    <left_joint>left_wheel_joint</left_joint>
+    <right_joint>right_wheel_joint</right_joint>
+    
+    <wheel_separation>0.5</wheel_separation>
+    <wheel_radius>0.15</wheel_radius>
+    
+    <odom_publish_tf>true</odom_publish_tf>
+    <publish_wheel_joint_state>true</publish_wheel_joint_state>
+    </plugin>
+  </gazebo>
+
+</robot>
+
